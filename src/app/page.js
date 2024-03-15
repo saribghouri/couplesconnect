@@ -5,10 +5,25 @@ import Layout from './component/DashboardLayout'
 import { Button, Checkbox, Form, Input } from 'antd'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { loginUser } from './features/userSlice';
+
 
 
 const Page = () => {
 const router = useRouter()
+
+const dispatch = useDispatch();
+const onFinish = (values) => {
+  dispatch(loginUser({ emailAddress: values.email, password: values.password }))
+    .unwrap()
+    .then(() => {
+      router.push("/dashboard");
+    })
+    .catch((error) => {
+      console.error('Failed to login:', error);
+    });
+};
   return (
     
     <div
@@ -36,7 +51,7 @@ const router = useRouter()
       initialValues={{
         remember: true,
       }}
-      // onFinish={onFinish}
+      onFinish={onFinish}
       // onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
@@ -97,10 +112,10 @@ const router = useRouter()
         <Button
           type="enter"
           className="bg-[#3D266B] !text-white border-none flex justify-center rounded-l-[10px] rounded-r-[10px] w-[390px] "
-          // htmlType="submit"
-          onClick={()=>{
-            router.push("/dashboard")
-          }}
+          htmlType="submit"
+       onClick={()=>{
+        
+       }}
           // loading={loading}
         >
           Login

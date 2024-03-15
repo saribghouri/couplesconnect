@@ -8,16 +8,20 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Form, Layout, Menu, Modal, Button, theme } from "antd";
+import { Dropdown, Form, Layout, Menu, Modal, Button, theme, Input } from "antd";
 
 import { useRouter } from "next/navigation";
-import { Input } from "postcss";
+
 import Image from "next/image";
 
 import React, { useState } from "react";
+import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
+  const userInfo = useSelector((state) => state.user.userInfo);
+  console.log(userInfo.user,"==========userInfo===========")
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
@@ -28,9 +32,18 @@ const DashboardLayout = ({ children }) => {
   const handleShowChangePasswordModal = () => {
     setShowChangePasswordModal(true);
   };
+  const navigate = (path) => {
+    router.push(path);
+  };
 console.log(collapsed,"===================")
   const handleCloseChangePasswordModal = () => {
     setShowChangePasswordModal(false);
+  };
+  const handleLogout = () => {
+
+    Cookies.remove("apiToken");
+ 
+    router.push("/");
   };
   const items = [
     {
@@ -57,7 +70,7 @@ console.log(collapsed,"===================")
       label: (
         <a
           className="flex justify-center text-center rounded-l-[20px] pt-[5px] pb-[5px] rounded-r-[20px]  bg-[#F24044] !text-white"
-          // onClick={handleLogout}
+          onClick={handleLogout}
         >
           <LogoutOutlined />
           Logout
@@ -90,7 +103,7 @@ console.log(collapsed,"===================")
           alt=""
         />,
         [
-          getItem("All Users", "sub12", <Image src={""} alt="" />, null, router.push("/alluser")),
+          getItem("All Users", "sub12", <Image src={""} alt="" />, null, () => navigate("/alluser")),
           getItem("Active Users", "sub13", <Image src={""} alt="" />, null),
 
           getItem("Inactive Users", "sub14", <Image src={""} alt="" />, null),
@@ -152,6 +165,7 @@ console.log(collapsed,"===================")
       onClick,
     };
   }
+
   return (
     <Layout className="!bg-[#fff]"
       style={{
@@ -316,8 +330,8 @@ console.log(collapsed,"===================")
                   >
                     <a onClick={(e) => e.preventDefault()}>
                       <div className="text-[#ffffff] font-semibold flex  overflow-ellipsis justify-between">
-                        {/* {userDetails?.userName} */}
-                        <p className=" overflow-ellipsis">Taylor swift</p>
+                      
+                        <p className=" overflow-ellipsis">  {userInfo.user.userName}</p>
                         <DownOutlined className="" />
                       </div>
                     </a>
@@ -326,8 +340,8 @@ console.log(collapsed,"===================")
                 <img
                   alt=""
                   className="w-[50px] h-[50px] rounded-[50%] ml-[-20px] mt-[-5px]  absolute"
-                  // src={userDetails?.profileImage || null}
-                  src="/assets/images/Ellipse 1.png"
+                  src={userInfo.user.profileImage|| null}
+                  // src="/assets/images/Ellipse 1.png"
                 />
               </div>
             </div>
@@ -341,4 +355,21 @@ console.log(collapsed,"===================")
 
 export default DashboardLayout;
 
-// {children}
+// // {children}
+
+// import { Layout } from 'antd'
+// import React from 'react'
+
+// const DashboardLayout = ({ children }) => {
+//   return (
+//     <Layout>
+
+//       <div>{children}</div>
+//     </Layout>
+  
+
+ 
+//   )
+// }
+
+// export default DashboardLayout
