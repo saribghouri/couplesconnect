@@ -8,7 +8,16 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Form, Layout, Menu, Modal, Button, theme, Input } from "antd";
+import {
+  Dropdown,
+  Form,
+  Layout,
+  Menu,
+  Modal,
+  Button,
+  theme,
+  Input,
+} from "antd";
 
 import { useRouter } from "next/navigation";
 
@@ -20,8 +29,8 @@ import { useSelector } from "react-redux";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
-  const userInfo = useSelector((state) => state.user.userInfo);
-  console.log(userInfo.user,"==========userInfo===========")
+  // const userInfo = useSelector((state) => state.user.userInfo.user);
+  // console.log(userInfo,"==========userInfo===========")
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
@@ -35,14 +44,13 @@ const DashboardLayout = ({ children }) => {
   const navigate = (path) => {
     router.push(path);
   };
-console.log(collapsed,"===================")
+  console.log(collapsed, "===================");
   const handleCloseChangePasswordModal = () => {
     setShowChangePasswordModal(false);
   };
   const handleLogout = () => {
-
     Cookies.remove("apiToken");
- 
+
     router.push("/");
   };
   const items = [
@@ -69,7 +77,7 @@ console.log(collapsed,"===================")
       key: "3",
       label: (
         <a
-          className="flex justify-center text-center rounded-l-[20px] pt-[5px] pb-[5px] rounded-r-[20px]  bg-[#F24044] !text-white"
+          className="flex justify-center text-center rounded-l-[20px] pt-[5px] pb-[5px] rounded-r-[20px]  !bg-[#c75171] !text-white"
           onClick={handleLogout}
         >
           <LogoutOutlined />
@@ -81,34 +89,71 @@ console.log(collapsed,"===================")
   const generateMenuItems = () => {
     console.log("sabgqebew");
     return [
-      getItem(
-        "Dashboard",
-        "1",
-        <Image
-          src={"assets/icon/bxs_dashboard.svg"}
-          width={20}
-          height={20}
-          alt=""
-        />,
-        null
-      ),
 
       getItem(
-        "Authentication",
+        "",
         "sub1",
-        <Image
-          src={"assets/icon/carbon_two-factor-authentication.svg"}
-          width={20}
-          height={20}
-          alt=""
-        />,
-        [
-          getItem("All Users", "sub12", <Image src={""} alt="" />, null, () => navigate("/alluser")),
-          getItem("Active Users", "sub13", <Image src={""} alt="" />, null),
 
-          getItem("Inactive Users", "sub14", <Image src={""} alt="" />, null),
-        ]
+        <button
+          onClick={() => {
+            router.push("/alluser");
+          }}
+          className="w-[288px] h-[40px] !ml-[-28px] justify-center flex item-center pl-[10px] pr-[10px] !text-center !bg-[#C25272] !text-[#ffffff] "
+        >
+          <Image
+            className=""
+            src={"assets/icon/bxs_dashboard.svg"}
+            width={30}
+            height={30}
+            alt=""
+          />
+          <h1 className="!w-[100%] ml-[-47px] text-[18px]">Dashboard</h1>
+        </button>
       ),
+      // getItem(
+      //   "Dashboard",
+      //   "1",
+      //   <Image
+      //     src={"assets/icon/bxs_dashboard.svg"}
+      //     width={20}
+      //     height={20}
+      //     alt=""
+      //   />,
+      //   null
+      // ),
+
+      getItem(
+        "",
+        "sub3",
+
+        <button
+          onClick={() => {
+            router.push("/alluser");
+          }}
+          className="w-[248px] h-[40px] !ml-[-28px] justify-center flex item-center pl-[10px] pr-[10px] !text-center !text-[#ffffff] "
+        >
+          <Image
+            className=""
+            src={"assets/icon/carbon_two-factor-authentication.svg"}
+            width={30}
+            height={30}
+            alt=""
+          />
+          <h1 className="!w-[100%] ml-[-47px] text-[18px]">All Users</h1>
+        </button>
+      ),
+      // getItem(
+      //   "",
+      //   "sub1",
+      //   <Image
+      //     src={"assets/icon/carbon_two-factor-authentication.svg"}
+      //     width={20}
+      //     height={20}
+      //     alt=""
+      //   />,
+      //   null, () => navigate("/alluser")
+
+      // ),
       getItem(
         "Subscription plans",
         "sub2",
@@ -136,22 +181,24 @@ console.log(collapsed,"===================")
       ),
 
       getItem(
-        " User Subscription ",
+        "",
         "sub3",
-        <Image
-          src={"assets/icon/uiw_user-add.svg"}
-          width={20}
-          height={20}
-          alt=""
-        />,
-        [
-          getItem(
-            "Users Subscription",
-            "sub17",
-            <Image src={""} alt="" />,
-            null
-          ),
-        ]
+
+        <button
+          onClick={() => {
+            router.push("/alluser");
+          }}
+          className="w-[248px] h-[40px] !ml-[-28px] justify-center flex item-center pl-[10px] pr-[10px] !text-center !bg-[#C25272] !text-[#ffffff] "
+        >
+          <Image
+            className=""
+            src={"assets/icon/carbon_two-factor-authentication.svg"}
+            width={30}
+            height={30}
+            alt=""
+          />
+          <h1 className="!w-[100%] ml-[-47px] text-[18px]">Fetch Interest  </h1>
+        </button>
       ),
     ];
   };
@@ -167,7 +214,8 @@ console.log(collapsed,"===================")
   }
 
   return (
-    <Layout className="!bg-[#fff]"
+    <Layout
+      className="!bg-[#fff]"
       style={{
         minHeight: "100vh",
         width: "auto",
@@ -180,7 +228,7 @@ console.log(collapsed,"===================")
         width="300px"
         collapsed={collapsed}
       >
-         <div className="p-[20px] text-[22px]">
+        <div className="p-[20px] text-[22px]">
           <h1 className="text-white text-center">
             <Image
               width={800}
@@ -199,9 +247,8 @@ console.log(collapsed,"===================")
           mode="inline"
           items={item}
         />
-        
       </Sider>
-      <Layout  className=" !bg-[#fff]">
+      <Layout className=" !bg-[#fff]">
         <Header
           className="!bg-[#fff] header   "
           style={{
@@ -211,8 +258,7 @@ console.log(collapsed,"===================")
           }}
         >
           <div className="flex items-center justify-between">
-           
-          <div>
+            <div>
               <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -224,7 +270,7 @@ console.log(collapsed,"===================")
                 }}
               />
             </div>
-         
+
             <div>
               <Modal
                 className="change-password-modal relative"
@@ -329,9 +375,11 @@ console.log(collapsed,"===================")
                     trigger={["click"]}
                   >
                     <a onClick={(e) => e.preventDefault()}>
-                      <div className="text-[#ffffff] font-semibold flex  overflow-ellipsis justify-between">
-                      
-                        <p className=" overflow-ellipsis">  {userInfo.user.userName}</p>
+                      <div className="/text-[#ffffff] font-semibold flex  overflow-ellipsis justify-between">
+                        <p className=" overflow-ellipsis">
+                          {/* {userInfo.userName} */}
+                          asbaBaw
+                        </p>
                         <DownOutlined className="" />
                       </div>
                     </a>
@@ -340,8 +388,8 @@ console.log(collapsed,"===================")
                 <img
                   alt=""
                   className="w-[50px] h-[50px] rounded-[50%] ml-[-20px] mt-[-5px]  absolute"
-                  src={userInfo.user.profileImage|| null}
-                  // src="/assets/images/Ellipse 1.png"
+                  // src={userInfo.profileImage|| null}
+                  src="/assets/images/Ellipse 1.png"
                 />
               </div>
             </div>
@@ -366,9 +414,7 @@ export default DashboardLayout;
 
 //       <div>{children}</div>
 //     </Layout>
-  
 
- 
 //   )
 // }
 

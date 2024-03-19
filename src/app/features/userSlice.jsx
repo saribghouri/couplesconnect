@@ -2,26 +2,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 
-// Define the initial state
 const initialState = {
   userInfo: null,
   isLoading: false,
   error: null,
 };
 
-// Async thunk for login
 export const loginUser = createAsyncThunk(
   'user/login',
-  async ({ emailAddress, password }, { rejectWithValue }) => {
+  async ({ userName, password }, { rejectWithValue }) => {
     try {
         const token = Cookies.get("apiToken");
 
-      const response = await fetch('https://mksm.blownclouds.com/api/users/login', {
+      const response = await fetch('https://coupleskonnect.blownclouds.com/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ emailAddress, password }),
+        body: JSON.stringify({ userName, password }),
       });
       const data = await response.json();
       Cookies.set("apiToken", data.access_token);

@@ -15,7 +15,7 @@ const router = useRouter()
 
 const dispatch = useDispatch();
 const onFinish = (values) => {
-  dispatch(loginUser({ emailAddress: values.email, password: values.password }))
+  dispatch(loginUser({ userName: values.userName, password: values.password }))
     .unwrap()
     .then(() => {
       router.push("/dashboard");
@@ -60,12 +60,12 @@ const onFinish = (values) => {
       </h1>
       <Form.Item
         className=""
-        name="email"
+        name="userName"
         rules={[
           {
             required: true,
             message: (
-              <span style={{ color: "white" }}>Please input your email!</span>
+              <span style={{ color: "white" }}>Please input your userName!</span>
             ),
           },
         ]}
